@@ -52,39 +52,39 @@ let consonantsLowercase = [
   "y",
   "z",
 ];
-let consonantsUppercase = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "Ñ",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "Q",
-  "Y",
-  "Z",
-];
+// let consonantsUppercase = [
+//   "A",
+//   "B",
+//   "C",
+//   "D",
+//   "E",
+//   "F",
+//   "G",
+//   "H",
+//   "I",
+//   "J",
+//   "K",
+//   "L",
+//   "M",
+//   "N",
+//   "Ñ",
+//   "O",
+//   "P",
+//   "Q",
+//   "R",
+//   "S",
+//   "T",
+//   "U",
+//   "V",
+//   "W",
+//   "Q",
+//   "Y",
+//   "Z",
+// ];
 let level1 = vocalsLowercase
   .concat(vocalsUppercase)
-  .concat(consonantsLowercase)
-  .concat(consonantsUppercase);
+  .concat(consonantsLowercase);
+// .concat(consonantsUppercase);
 // .concat(numbers);
 
 // Char alternative name.
