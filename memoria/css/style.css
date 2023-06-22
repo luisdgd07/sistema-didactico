@@ -12,8 +12,7 @@ main {
     margin: auto;
 }
 
-figure,
-figure img {
+figure,figure img {
     display: inline-block;
     width: 100%;
 }
