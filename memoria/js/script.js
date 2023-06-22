@@ -5,7 +5,7 @@ class Memorama {
     this.card1 = null;
     this.card2 = null;
 
-    this.availableImages = [0, 1, 2];
+    this.availableImages = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
     this.orderForThisRound = [];
     this.cards = Array.from(document.querySelectorAll(".board-game figure"));
 
@@ -33,7 +33,7 @@ class Memorama {
       const imgLabel = card.children[1].children[0];
 
       card.dataset.image = image;
-      imgLabel.src = `./images/${image}.png`;
+      imgLabel.src = `./images/${image}`;
     }
   }
 
@@ -112,8 +112,30 @@ class Memorama {
     this.canPlay = true;
 
     if (this.maxPairNumber == this.foundPairs) {
-      alert("¡Ganaste!");
-      this.setNewGame();
+      // alert("¡Ganaste!");
+
+      // this.setNewGame();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // Swal.fire({
+      //   title: "Do you want to save the changes?",
+      //   showDenyButton: true,
+      //   showCancelButton: true,
+      //   confirmButtonText: "Save",
+      //   denyButtonText: `Don't save`,
+      // }).then((result) => {
+      //   /* Read more about isConfirmed, isDenied below */
+      //   if (result.isConfirmed) {
+      //     Swal.fire("Saved!", "", "success");
+      //   } else if (result.isDenied) {
+      //     Swal.fire("Changes are not saved", "", "info");
+      //   }
+      // });
     }
   }
 

@@ -1,7 +1,14 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background: #a599ff;
-    /* background: #f99; */
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 121, 108, 1) 0%,
+      rgba(7, 177, 172, 1) 0%,
+      rgba(114, 255, 251, 1) 100%,
+      rgba(0, 255, 149, 1) 100%
+    );
 }
 
 h1 {
@@ -10,5 +17,3 @@ h1 {
     color: #fff;
     text-shadow: 2px 2px 2px rgb(0, 0, 0, 0.46);
 }
-Footer
-© 2022 GitHub,

@@ -1,6 +1,6 @@
 // Game chars.
-let vocalsLowercase = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
-let vocalsUppercase = ["A", "E", "I", "O", "U", "A", "E", "I", "O", "U"];
+// let vocalsLowercase = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
+// let vocalsUppercase = ["A", "E", "I", "O", "U", "A", "E", "I", "O", "U"];
 let numbers = [
   "1",
   "2",
@@ -81,11 +81,12 @@ let consonantsLowercase = [
 //   "Y",
 //   "Z",
 // ];
-let level1 = vocalsLowercase
-  .concat(vocalsUppercase)
-  .concat(consonantsLowercase);
-// .concat(consonantsUppercase);
-// .concat(numbers);
+let level1 = consonantsLowercase
+  // vocalsLowercase
+  //   .concat(vocalsUppercase)
+  //   .concat(consonantsLowercase);
+  // .concat(consonantsUppercase);
+  .concat(numbers);
 
 // Char alternative name.
 let level1Labels = { y: "Y griega" };
@@ -93,7 +94,7 @@ let level1Labels = { y: "Y griega" };
 // Main NPC control.
 let heroActions = [
   // Enter.
-  { cmd: "sound", sound: "closeDoor" },
+  // { cmd: "sound", sound: "closeDoor" },
   { cmd: "seedown" },
   { cmd: "show" },
   { cmd: "sleep", ms: 1000 },
@@ -101,8 +102,8 @@ let heroActions = [
   { cmd: "tox", x: 500 },
   { cmd: "toy", y: 100 },
   { cmd: "seedown" },
-  { cmd: "speak", msg: "Hola, me llamo Luis" },
-  { cmd: "speak", msg: "No te veo bien desde aquí, " },
+  // { cmd: "speak", msg: "" },
+  // { cmd: "speak", msg: "No te veo bien desde aquí, " },
 
   // Ask gender.
   // {
@@ -143,19 +144,15 @@ let heroActions = [
   // },
   {
     cmd: "speak",
-    msg: 'Cuando estés jugando, para decir una letra tienes que decir "Letra " y luego la letra.',
+    msg: 'Hola, me llamo Luis, para decir una letra tienes que decir "Letra A" y luego la letra. por ejemplo, si te pregunto por la A dí a".',
+    help: "Dilo alto y claro, haz una pequeña pausa despues de decir letra, prueba de nuevo.",
   },
-  {
-    cmd: "speak",
-    msg: 'por ejemplo, si te pregunto por la A, tu dirias "Letra Á".',
-  },
-  { cmd: "speak", msg: "Prueba tu ahora, " },
   {
     cmd: "ask",
-    msg: 'dí "Letra Á".',
-    help: "Dilo alto y claro, haz una pequeña pausa despues de decir letra, prueba de nuevo.",
+    msg: "",
+
     options: {
-      "letra a": function (npc) {
+      a: function (npc) {
         npc.goto("end_tuto");
       },
     },
@@ -178,8 +175,6 @@ let heroActions = [
 
   { cmd: "sleep", ref: "end_game" },
 ];
-
-// Alternative messages.
 let alternativeMessages = {
   "¿Qué letra estoy mostrando?": [
     "¿Qué letra estoy mostrando?",
@@ -188,17 +183,11 @@ let alternativeMessages = {
     "¿Y esta otra?",
     "¿Te sabes esta?",
   ],
-  "Muy bien !!.": [
-    "Muy bien !!.",
-    "Perfecto!.",
-    "Que máquina.",
-    "Ideal.",
-    "Que buena memoria.",
-  ],
+  "Muy bien !!.": ["Muy bien !!.", "Perfecto!.", "Que buena memoria."],
   "Casi aciertas, pero no.": [
     "Casi aciertas, pero no.",
     "Eso no parece correcto.",
-    "Un fallo lo tiene cualquiera.",
+    "Intenta de nuevo",
     "No es esa.",
     "No es correcto.",
   ],
