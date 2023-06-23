@@ -50,7 +50,6 @@ figure .back {
     display: block;
     backface-visibility: hidden;
 }
-
 figure .searched-image {
     position: absolute;
     top: 0;

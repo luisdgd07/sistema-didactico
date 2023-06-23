@@ -13,14 +13,12 @@ class Memorama {
 
     this.startGame();
   }
-
   startGame() {
     this.foundPairs = 0;
     this.setNewOrder();
     this.setImagesInCards();
     this.openCards();
   }
-
   setNewOrder() {
     this.orderForThisRound = this.availableImages.concat(this.availableImages);
     this.orderForThisRound.sort(() => Math.random() - 0.5);
