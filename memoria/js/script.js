@@ -13,14 +13,12 @@ class Memorama {
 
     this.startGame();
   }
-
   startGame() {
     this.foundPairs = 0;
     this.setNewOrder();
     this.setImagesInCards();
     this.openCards();
   }
-
   setNewOrder() {
     this.orderForThisRound = this.availableImages.concat(this.availableImages);
     this.orderForThisRound.sort(() => Math.random() - 0.5);
@@ -39,10 +37,31 @@ class Memorama {
 
   openCards() {
     this.cards.forEach((card) => card.classList.add("opened"));
+    let timerInterval;
+    Swal.fire({
+      position: "bottom",
+      width: 600,
+      html: " <h1 style='color: #716add;font-size:50pt'></h1>",
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("h1");
+        timerInterval = setInterval(() => {
+          const tiempoRestante = Swal.getTimerLeft();
 
+          const tiempoRestanteSegundos = Math.ceil(tiempoRestante / 1000);
+
+          b.textContent = tiempoRestanteSegundos;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {});
     setTimeout(() => {
       this.closeCards();
-    }, 10000);
+    }, 5000);
   }
 
   closeCards() {
@@ -112,30 +131,22 @@ class Memorama {
     this.canPlay = true;
 
     if (this.maxPairNumber == this.foundPairs) {
-      // alert("¡Ganaste!");
-
-      // this.setNewGame();
       Swal.fire({
-        position: "top-end",
+        title: "Genial, has ganado",
+        text: "¿Quieres jugar de nuevo?",
         icon: "success",
-        title: "Your work has been saved",
-        showConfirmButton: false,
-        timer: 1500,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Volver al inicio",
+        confirmButtonText: "Si",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.startGame();
+        } else {
+          window.location.href = "../";
+        }
       });
-      // Swal.fire({
-      //   title: "Do you want to save the changes?",
-      //   showDenyButton: true,
-      //   showCancelButton: true,
-      //   confirmButtonText: "Save",
-      //   denyButtonText: `Don't save`,
-      // }).then((result) => {
-      //   /* Read more about isConfirmed, isDenied below */
-      //   if (result.isConfirmed) {
-      //     Swal.fire("Saved!", "", "success");
-      //   } else if (result.isDenied) {
-      //     Swal.fire("Changes are not saved", "", "info");
-      //   }
-      // });
     }
   }
 
