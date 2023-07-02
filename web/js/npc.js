@@ -1,51 +1,3 @@
-/**
- * Create a new animated entity.
- *
- * Any command can have a "ref" property to allow use goto to that action.
- *
- * Commands to actions list:
- * gamechar:
- *  options: Array with characters to ask to.
- *  labels: Character label corrections.
- * goto:
- *  label: The ref label to go to.
- * ask:
- *  msg: The ask.
- *  options: Array with key word how index, and function how value.
- *  help: Optional, message if the NPC can't identify the user command.
- * speak: Speak a message.
- *  msg: The message.
- * event: Throw a simple event.
- *  id: The event ID.
- * log: Display a console message.
- *  msg: The message.
- * seedown: The NPC see down.
- * seeup: The NPC see up.
- * seeleft: The NPC see left.
- * seeright: The NPC see right.
- * show: Do the NPC visible.
- * hide: Do the NPC invisible.
- * sound: Play a sound.
- *  sound: Sound ID.
- *  repetitions: Number of repetitions, -1 to infinite.
- *  volume: Sound volume, between 0 and 1.
- * sleeprand: Sleep random time.
- *  min: ms
- *  max: ms
- * sleep: Sleep a frame
- *  ms: ms
- * tox: Go to pixel X.
- *  x: Pixel position.
- * toy: Go to pixel Y.
- *  y: Pixel position.
- * reset: Reset action list, go to first action.
- * destroy: Destroy this NPC.
- *
- * @param id Entity ID.
- * @param settings
- *
- * @returns {*} Entity
- */
 function addNpc(id, settings) {
   let npc;
   let options = {};
@@ -200,38 +152,62 @@ function addNpc(id, settings) {
                 this.bind("listener.result", function (data) {
                   this.unbind("listener.result");
                   // valida
+                  text = "";
+                  if (tipo == "letras") {
+                    text = "¿Qué letra  estoy mostrando?";
+                  } else {
+                    text = "¿Qué numero estoy mostrando?";
+                  }
                   if (isCommand(cmd.originalMsg, data.result)) {
                     speak(
                       alternativeText("Muy bien !!.") +
                         " " +
-                        alternativeText("¿Qué letra o numero estoy mostrando?")
+                        alternativeText(text)
                     );
                     showCharacter(" ");
                     this.working = false;
                     cmd.originalMsg = false;
                   } else {
                     if (this.tryCounter < 1) {
-                      cmd.msg = alternativeText("Casi aciertas, pero no.");
-                      if (cmd.help) {
-                        cmd.msg += cmd.help;
-                      }
+                      cmd.msg = alternativeText("Intenta nuevamente");
+                      // if (cmd.help) {
+                      //   cmd.msg += cmd.help;
+                      // }
                       this.working = false;
                       this.tryCounter++;
                     } else {
-                      let character = cmd.originalMsg.toLowerCase();
-                      if (cmd.labels[character]) {
-                        character = cmd.labels[character];
+                      let character = cmd.originalMsg;
+                      // if (cmd.labels[character]) {
+                      //   character = cmd.labels[character];
+                      // }
+                      if (tipo == "letras") {
+                        cmd.msg = 'La letra que viste es "' + character + '".';
+                        cmd.msg +=
+                          ' No pasa nada, seguro que la proxima vez recuerdas la letra  "' +
+                          character +
+                          '".';
+                        cmd.msg +=
+                          ' Intentemos otra por que la letra "' +
+                          character +
+                          '" se te atascó.';
+                        cmd.msg += alternativeText(
+                          "¿Qué letra estoy mostrando?"
+                        );
+                      } else {
+                        cmd.msg = 'El número que viste es "' + character + '".';
+                        cmd.msg +=
+                          ' No pasa nada, seguro que la próxima vez recuerdas el número  "' +
+                          character +
+                          '".';
+                        cmd.msg +=
+                          ' Intentemos otra por que el número "' +
+                          character +
+                          '" se te atascó.';
+                        cmd.msg += alternativeText(
+                          "¿Qué número estoy mostrando?"
+                        );
                       }
-                      cmd.msg = 'La letra que viste es la "' + character + '".';
-                      cmd.msg +=
-                        ' No pasa nada, seguro que la proxima vez recuerdas la letra "' +
-                        character +
-                        '".';
-                      cmd.msg +=
-                        ' Intentemos otra por que la letra "' +
-                        character +
-                        '" se te atascó.';
-                      cmd.msg += alternativeText("¿Qué letra estoy mostrando?");
+
                       showCharacter(cmd.originalMsg);
                       this.working = false;
                       cmd.originalMsg = false;
@@ -253,11 +229,9 @@ function addNpc(id, settings) {
                   var commands = [];
                   this.unbind("listener.result");
                   for (var command in cmd.options) {
-                    // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
                     if (cmd.options.hasOwnProperty(command)) {
                       commands.push(command);
                       if (isCommand(command, data.result)) {
-                        // Update before the response to allow to do goto.
                         me.actionIndex += 1;
                         this.working = false;
                         foundCommand = true;
@@ -268,7 +242,6 @@ function addNpc(id, settings) {
                     }
                   }
                   if (!foundCommand) {
-                    // cmd.msg = "Lo siento, no te entendí. " + cmd.originalMsg;
                     cmd.msg = "Lo siento, no te entendí. ";
 
                     if (cmd.help) {
@@ -289,8 +262,6 @@ function addNpc(id, settings) {
                 var me = this;
                 speak(cmd.msg, function () {
                   setTimeout(function () {
-                    // Delay to free the action.
-                    // The speech need some time to allow reuse it.
                     me.working = false;
                     me.actionIndex += 1;
                   }, 250);
@@ -501,10 +472,34 @@ function addNpc(id, settings) {
   npc.trigger(id + "Direction", { x: 1, y: 0 });
   return npc;
 }
-
-/**
- * Reset alternative text first use.
- */
+let alternativeMessages = {
+  "¿Qué letra estoy mostrando?": [
+    "¿Qué letra estoy mostrando?",
+    "¿Qué letra es?",
+    "¿Y esta?",
+    "¿Y esta otra?",
+    "¿Te sabes esta?",
+  ],
+  "Muy bien !!.": ["Muy bien !!.", "Perfecto!.", "Que buena memoria."],
+};
+let alternativeMessagesNumber = {
+  "¿Qué  numero estoy mostrando?": [
+    "¿Qué  numero estoy mostrando?",
+    "¿Qué  numero es?",
+    "¿Y esta?",
+    "¿Y esta otra?",
+    "¿Te sabes esta?",
+  ],
+  "Muy bien !!.": ["Muy bien !!.", "Perfecto!.", "Que buena memoria."],
+  "No acertaste": [
+    "Eso no parece correcto.",
+    "Intenta de nuevo",
+    "No es esa.",
+    "No es correcto.",
+  ],
+};
+// This array is used to always get the key the first time it's used.
+let alternativeMessagesFirst = {};
 function alternativeTextReset() {
   alternativeMessagesFirst = {};
 }
@@ -517,6 +512,7 @@ function alternativeTextReset() {
  * @returns {*}
  */
 function alternativeText(text) {
+  // if (tipo == "letras") {
   if (!alternativeMessagesFirst.hasOwnProperty(text)) {
     alternativeMessagesFirst[text] = true;
     return text;
@@ -525,6 +521,16 @@ function alternativeText(text) {
     let len = alternativeMessages[text].length;
     return alternativeMessages[text][rand(0, len - 1)];
   }
+  // } else {
+  //   if (!alternativeMessagesFirst.hasOwnProperty(text)) {
+  //     alternativeMessagesFirst[text] = true;
+  //     return text;
+  //   }
+  //   if (alternativeMessagesNumber.hasOwnProperty(text)) {
+  //     let len = alternativeMessagesNumber[text].length;
+  //     return alternativeMessagesNumber[text][rand(0, len - 1)];
+  //   }
+  // }
 
   return text;
 }

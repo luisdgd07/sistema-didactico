@@ -52,11 +52,7 @@ let consonantsLowercase = [
 ];
 
 let letras = consonantsLowercase;
-// vocalsLowercase
-//   .concat(vocalsUppercase)
-//   .concat(consonantsLowercase);
-// .concat(consonantsUppercase);
-// .concat(numbers);
+
 let numeros = numbers;
 let level1Labels = { y: "Y griega" };
 
@@ -100,21 +96,3 @@ let heroActions = [
   },
   { cmd: "sleep", ref: "end_game" },
 ];
-let alternativeMessages = {
-  "¿Qué letra o numero estoy mostrando?": [
-    "¿Qué letra o numero estoy mostrando?",
-    "¿Qué letra o numero es?",
-    "¿Y esta?",
-    "¿Y esta otra?",
-    "¿Te sabes esta?",
-  ],
-  "Muy bien !!.": ["Muy bien !!.", "Perfecto!.", "Que buena memoria."],
-  "Casi aciertas, pero no.": [
-    "Eso no parece correcto.",
-    "Intenta de nuevo",
-    "No es esa.",
-    "No es correcto.",
-  ],
-};
-// This array is used to always get the key the first time it's used.
-let alternativeMessagesFirst = {};
