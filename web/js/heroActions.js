@@ -1,6 +1,4 @@
-// Game chars.
-// let vocalsLowercase = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
-// let vocalsUppercase = ["A", "E", "I", "O", "U", "A", "E", "I", "O", "U"];
+var tipo = "";
 let numbers = [
   "1",
   "2",
@@ -52,49 +50,17 @@ let consonantsLowercase = [
   "y",
   "z",
 ];
-// let consonantsUppercase = [
-//   "A",
-//   "B",
-//   "C",
-//   "D",
-//   "E",
-//   "F",
-//   "G",
-//   "H",
-//   "I",
-//   "J",
-//   "K",
-//   "L",
-//   "M",
-//   "N",
-//   "Ñ",
-//   "O",
-//   "P",
-//   "Q",
-//   "R",
-//   "S",
-//   "T",
-//   "U",
-//   "V",
-//   "W",
-//   "Q",
-//   "Y",
-//   "Z",
-// ];
-let level1 = consonantsLowercase
-  // vocalsLowercase
-  //   .concat(vocalsUppercase)
-  //   .concat(consonantsLowercase);
-  // .concat(consonantsUppercase);
-  .concat(numbers);
 
-// Char alternative name.
+let letras = consonantsLowercase;
+// vocalsLowercase
+//   .concat(vocalsUppercase)
+//   .concat(consonantsLowercase);
+// .concat(consonantsUppercase);
+// .concat(numbers);
+let numeros = numbers;
 let level1Labels = { y: "Y griega" };
 
-// Main NPC control.
 let heroActions = [
-  // Enter.
-  // { cmd: "sound", sound: "closeDoor" },
   { cmd: "seedown" },
   { cmd: "show" },
   { cmd: "sleep", ms: 1000 },
@@ -102,90 +68,48 @@ let heroActions = [
   { cmd: "tox", x: 500 },
   { cmd: "toy", y: 100 },
   { cmd: "seedown" },
-  // { cmd: "speak", msg: "" },
-  // { cmd: "speak", msg: "No te veo bien desde aquí, " },
 
-  // Ask gender.
-  // {
-  //   cmd: "ask",
-  //   msg: "¿Qué eres?. ¿Un niño, o una niña?",
-  //   help: "Por favor, di solo niño o niña.",
-  //   options: {
-  //     niño: function (npc) {
-  //       npc.userIsMale = true;
-  //       npc.goto("con_tuto");
-  //     },
-  //     niña: function (npc) {
-  //       npc.userIsMale = false;
-  //       npc.goto("con_tuto");
-  //     },
-  //   },
-  // },
-  // Tutorial.
-  // {
-  //   cmd: "ask",
-  //   msg: "¿Te enseño a jugar?",
-  //   help: "Responde sí o no para que te entienda.",
-  //   options: {
-  //     si: function (npc) {
-  //       npc.goto("con_tuto");
-  //     },
-  //     no: function (npc) {
-  //       npc.goto("after_tuto");
-  //     },
-  //   },
-  // },
-
-  // With tutorial.
-  // {
-  //   cmd: "speak",
-  //   ref: "con_tuto",
-  //   msg: "Soy un simple autómata, no puedo escucharte mientras hablo, y a veces no entiendo bien lo que dices.",
-  // },
-  {
-    cmd: "speak",
-    msg: 'Hola, me llamo Luis, para decir una letra tienes que decir "Letra A" y luego la letra. por ejemplo, si te pregunto por la A dí a".',
-    help: "Dilo alto y claro, haz una pequeña pausa despues de decir letra, prueba de nuevo.",
-  },
   {
     cmd: "ask",
-    msg: "",
-
+    msg: "Hola, mi nombre es Aventurito. A que deseas jugar a aprender hoy? a las letras o los números?",
     options: {
-      a: function (npc) {
-        npc.goto("end_tuto");
+      numeros: function (npc) {
+        npc.goto("numeros");
+        npc.type = "numeros";
+        tipo = "numeros";
+      },
+      letras: function (npc) {
+        npc.goto("letras");
+        npc.type = "letras";
+        tipo = "letras";
       },
     },
   },
   {
-    cmd: "speak",
-    ref: "end_tuto",
-    msg: "Muy bien!, ya lo tienes",
+    cmd: "gamechar",
+    ref: "letras",
+    options: letras,
+    labels: level1Labels,
+    msg: `Muy bien!, vamos a aprender las letras, que letra es esta?`,
   },
-  { cmd: "goto", label: "after_tuto" },
-
-  // Play the game.
   {
     cmd: "gamechar",
-    ref: "after_tuto",
-    options: level1,
-    labels: level1Labels,
-    help: "La letra es la que está delante de mi. Recuerda decir Letra antes, prueba de nuevo.",
+    ref: "numeros",
+    options: numbers,
+    msg: `Muy bien!, vamos a aprender los números, que numero es este?`,
   },
-
   { cmd: "sleep", ref: "end_game" },
 ];
 let alternativeMessages = {
-  "¿Qué letra estoy mostrando?": [
-    "¿Qué letra estoy mostrando?",
-    "¿Qué letra es esta?",
+  "¿Qué letra o numero estoy mostrando?": [
+    "¿Qué letra o numero estoy mostrando?",
+    "¿Qué letra o numero es?",
     "¿Y esta?",
     "¿Y esta otra?",
     "¿Te sabes esta?",
   ],
   "Muy bien !!.": ["Muy bien !!.", "Perfecto!.", "Que buena memoria."],
   "Casi aciertas, pero no.": [
-    "Casi aciertas, pero no.",
     "Eso no parece correcto.",
     "Intenta de nuevo",
     "No es esa.",

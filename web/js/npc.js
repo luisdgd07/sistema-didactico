@@ -204,7 +204,7 @@ function addNpc(id, settings) {
                     speak(
                       alternativeText("Muy bien !!.") +
                         " " +
-                        alternativeText("¿Qué letra estoy mostrando?")
+                        alternativeText("¿Qué letra o numero estoy mostrando?")
                     );
                     showCharacter(" ");
                     this.working = false;
