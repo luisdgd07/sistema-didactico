@@ -1,3 +1,7 @@
+/* 
+funcionalidad para mostrar los graficos
+Gonzalez Luis C.I: 27.143.015
+*/
 let gameChar = false;
 
 window.addEventListener("load", function () {

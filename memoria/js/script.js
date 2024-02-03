@@ -1,3 +1,7 @@
+/* 
+funcionalidad para verificar que sen iguales las cartas
+Lanz Samuel  C.I: 29.660.107
+*/
 class Memorama {
   constructor() {
     this.canPlay = false;

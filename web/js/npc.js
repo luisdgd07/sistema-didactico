@@ -1,3 +1,7 @@
+/* 
+animaciones
+Gonzalez Luis C.I: 27.143.015
+*/
 function addNpc(id, settings) {
   let npc;
   let options = {};

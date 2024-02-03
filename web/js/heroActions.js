@@ -1,3 +1,7 @@
+/* 
+funcionalidad acciones  
+Gonzalez Luis C.I: 27.143.015
+*/
 var tipo = "";
 let numbers = [
   "1",
@@ -69,9 +73,9 @@ let heroActions = [
     cmd: "ask",
     msg: "Hola, mi nombre es Aventurito. A que deseas jugar a aprender hoy? a las letras o los números?",
     options: {
-      numeros: function (npc) {
-        npc.goto("numeros");
-        npc.type = "numeros";
+      números: function (npc) {
+        npc.goto("números");
+        npc.type = "números";
         tipo = "numeros";
       },
       letras: function (npc) {
@@ -90,7 +94,7 @@ let heroActions = [
   },
   {
     cmd: "gamechar",
-    ref: "numeros",
+    ref: "números",
     options: numbers,
     msg: `Muy bien!, vamos a aprender los números, que numero es este?`,
   },
